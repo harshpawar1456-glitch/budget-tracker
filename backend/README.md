@@ -1,124 +1,104 @@
-# Budget Tracker
+# 💰 Budget Tracker
 
-A simple full-stack budget tracker. Add income and expenses, see your totals update, and delete entries you no longer need. Everything is stored in MongoDB, so your data is still there after a refresh.
+A full-stack Budget Tracker web application that allows users to record
+income and expenses, categorize transactions, and monitor their current
+financial balance.
 
-## Features
+## 🚀 Features
 
 - Add income and expense transactions
-- View all transactions in a table
-- Delete a transaction
-- Live totals: income, expenses, and balance
-- Income and expenses are colour-coded
-- Responsive layout that works on a phone
-- Data saved permanently in MongoDB
+- Categorize transactions
+- Add transaction descriptions and dates
+- Automatically calculate total income
+- Automatically calculate total expenses
+- Display current balance
+- Store transactions permanently in MongoDB
+- Data persists after page refresh
+- Responsive and clean user interface
 
-## Technologies used
+## 🛠️ Tech Stack
 
-| Layer | Technology |
-| ----- | ---------- |
-| Frontend | HTML, CSS, vanilla JavaScript (`fetch`) |
-| Backend | Node.js, Express.js |
-| Database | MongoDB with Mongoose |
-| Other | dotenv, cors |
+### Frontend
+- HTML
+- CSS
+- JavaScript
 
-## Project structure
+### Backend
+- Node.js
+- Express.js
 
-```
+### Database
+- MongoDB Atlas
+- Mongoose
+
+## 📁 Project Structure
+
 budget-tracker/
-│
-├── frontend/
+├── FRONTEND/
 │   ├── index.html
 │   ├── style.css
 │   └── script.js
 │
-├── backend/
-│   ├── models/
-│   │   └── Transaction.js
-│   ├── routes/
-│   │   └── transactions.js
-│   ├── server.js
-│   ├── package.json
-│   └── .env
-│
-└── README.md
-```
+└── backend/
+    ├── models/
+    │   └── Transaction.js
+    ├── routes/
+    │   └── transactions.js
+    ├── server.js
+    ├── package.json
+    └── .gitignore
 
-## Installation
+## ⚙️ Installation
 
-1. Download or clone this project.
-2. Open a terminal in the `backend` folder.
-3. Install the packages:
+Clone the repository:
 
-```bash
+git clone https://github.com/harshpawar1456-glitch/budget-tracker.git
+
+Navigate to the backend:
+
+cd budget-tracker/backend
+
+Install dependencies:
+
 npm install
-```
 
-4. Create a file named `.env` inside `backend` (copy `.env.example`) and fill in:
+Create a `.env` file inside the backend folder:
 
-```
 MONGODB_URI=your_mongodb_connection_string
 PORT=5000
-```
 
-## How to run
+Start the server:
 
-From the `backend` folder:
-
-```bash
 npm start
-```
 
-Then open <http://localhost:5000> in your browser. The backend also serves the frontend, so you do not need a second server.
+Open:
 
-## API endpoints
+http://localhost:5000
 
-| Method | Endpoint | What it does |
-| ------ | -------- | ------------ |
-| GET | `/api/transactions` | Returns all transactions, newest first |
-| GET | `/api/transactions/summary` | Returns income, expense, and balance totals |
-| POST | `/api/transactions` | Creates a transaction |
-| DELETE | `/api/transactions/:id` | Deletes one transaction |
+## 🔐 Environment Variables
 
-### POST body example
+The MongoDB connection string is stored using environment variables.
 
-```json
-{
-  "amount": 25000,
-  "type": "income",
-  "category": "Salary",
-  "description": "September salary",
-  "date": "2026-09-01"
-}
-```
+The `.env` file is excluded from GitHub using `.gitignore` to prevent
+database credentials from being exposed.
 
-## MongoDB setup
+## 📸 Screenshots
 
-### Option A — MongoDB Atlas (recommended)
+Add screenshots of the Budget Tracker interface here.
 
-1. Create a free account at <https://www.mongodb.com/cloud/atlas>.
-2. Create a free M0 cluster.
-3. Under **Database Access**, create a user with a username and password.
-4. Under **Network Access**, add your IP address (or `0.0.0.0/0` while learning).
-5. Click **Connect → Drivers** and copy the connection string.
-6. Paste it into `.env`, replacing `<password>` with your real password and adding the database name:
+## 🔮 Future Improvements
 
-```
-MONGODB_URI=mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net/budget-tracker
-```
+- User authentication
+- Monthly budget limits
+- Charts and spending analytics
+- Transaction filtering
+- Search functionality
+- Export transactions to CSV
+- Deployment to the cloud
 
-### Option B — Local MongoDB
+## 👨‍💻 Author
 
-Install MongoDB Community Server, start it, and use:
+Harsh Pawar
 
-```
-MONGODB_URI=mongodb://127.0.0.1:27017/budget-tracker
-```
-
-## Future improvements
-
-- Edit an existing transaction
-- Filter by month or category
-- Search the transaction list
-- Export to CSV
-- User accounts so each person sees only their own data
-- A simple chart of spending by category
+MBA Tech – Computer Engineering  
+NMIMS MPSTME
