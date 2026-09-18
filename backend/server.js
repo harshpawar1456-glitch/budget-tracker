@@ -1,8 +1,7 @@
 // server.js
-// This is the starting point of the backend.
-// It creates the web server, connects to MongoDB, and plugs in the routes.
+// Main backend server for the Budget Tracker
 
-require("dotenv").config(); // reads the .env file into process.env
+require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -12,45 +11,81 @@ const path = require("path");
 const transactionRoutes = require("./routes/transactions");
 
 const app = express();
+
+// Render automatically provides PORT in production.
+// Locally, the app will use port 5000.
 const PORT = process.env.PORT || 5000;
 
-// ---------- Middleware (runs on every request) ----------
+// --------------------------------------------------
+// Middleware
+// --------------------------------------------------
 
-// Allows the frontend to call this server from a different address/port.
 app.use(cors());
 
-// Turns the incoming JSON body into a normal JavaScript object (req.body).
 app.use(express.json());
 
-// Serves the frontend folder, so http://localhost:5000 opens index.html.
-app.use(express.static(path.join(__dirname, "..", "frontend")));
+// --------------------------------------------------
+// Frontend
+// --------------------------------------------------
 
-// ---------- Routes ----------
+// IMPORTANT:
+// The GitHub folder is named "FRONTEND" in uppercase.
+// Render runs Linux, where folder names are case-sensitive.
+app.use(
+  express.static(path.join(__dirname, "..", "FRONTEND"))
+);
 
-// Every URL starting with /api/transactions is handled by transactions.js
+// --------------------------------------------------
+// API Routes
+// --------------------------------------------------
+
 app.use("/api/transactions", transactionRoutes);
 
-// A tiny health check you can open in the browser to confirm the server runs.
+// Health check
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" });
+  res.json({
+    status: "ok",
+    message: "Budget Tracker API is running"
+  });
 });
 
-// If no route matched an /api URL, send JSON instead of an HTML error page.
+// Return JSON for invalid API routes
 app.use("/api", (req, res) => {
-  res.status(404).json({ message: "API route not found" });
+  res.status(404).json({
+    message: "API route not found"
+  });
 });
 
-// ---------- Connect to MongoDB, then start listening ----------
+// --------------------------------------------------
+// Frontend fallback
+// --------------------------------------------------
+
+// If someone visits the main website,
+// send the Budget Tracker index.html file.
+app.get("/", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "FRONTEND", "index.html")
+  );
+});
+
+// --------------------------------------------------
+// MongoDB Connection
+// --------------------------------------------------
 
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
+
     app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1); // stop the app, there is nothing to serve without a database
+    console.error(
+      "MongoDB connection failed:",
+      error.message
+    );
+
+    process.exit(1);
   });
