@@ -1,0 +1,238 @@
+/* style.css
+   All the visual styling for the page. Plain CSS, no frameworks. */
+
+/* ---------- Reset and base ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ink: #1f2933;
+  --muted: #667180;
+  --line: #e3e8ee;
+  --bg: #f5f7fa;
+  --income: #17875b;
+  --expense: #c23b3b;
+  --accent: #2f57d6;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  padding: 24px 16px 48px;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+}
+
+.header p {
+  color: var(--muted);
+}
+
+/* ---------- Summary cards ---------- */
+.summary {
+  display: grid;
+  /* auto-fit + minmax = cards wrap onto new lines on small screens */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(31, 41, 51, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.card-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* A coloured strip on the left tells the three cards apart */
+.card-income   { border-left: 4px solid var(--income); }
+.card-expense  { border-left: 4px solid var(--expense); }
+.card-balance  { border-left: 4px solid var(--accent); }
+
+.card-income .card-value  { color: var(--income); }
+.card-expense .card-value { color: var(--expense); }
+.card-balance .card-value { color: var(--accent); }
+
+/* ---------- Panels ---------- */
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(31, 41, 51, 0.06);
+}
+
+.panel h2 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+/* ---------- Form ---------- */
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.field input,
+.field select {
+  font: inherit;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  font: inherit;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover { background: #2445ad; }
+.btn-primary:disabled { background: #97a4c9; cursor: not-allowed; }
+
+/* ---------- Messages ---------- */
+.message {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.message.error   { color: var(--expense); }
+.message.success { color: var(--income); }
+
+/* ---------- Table ---------- */
+.table-wrap {
+  overflow-x: auto; /* lets a wide table scroll sideways on a phone */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.93rem;
+  white-space: nowrap;
+}
+
+.table th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.table tbody tr:hover { background: #fafbfd; }
+
+.right { text-align: right; }
+
+/* Pills that show income vs expense */
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.tag-income  { background: #e3f4ec; color: var(--income); }
+.tag-expense { background: #fbe8e8; color: var(--expense); }
+
+.amount-income  { color: var(--income); font-weight: 600; }
+.amount-expense { color: var(--expense); font-weight: 600; }
+
+.btn-delete {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--expense);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-delete:hover {
+  background: #fbe8e8;
+  border-color: var(--expense);
+}
+
+/* ---------- Empty state ---------- */
+.empty {
+  color: var(--muted);
+  font-size: 0.92rem;
+  padding: 14px 2px 2px;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 520px) {
+  .header h1 { font-size: 1.6rem; }
+  .panel { padding: 16px; }
+  .card-value { font-size: 1.4rem; }
+}

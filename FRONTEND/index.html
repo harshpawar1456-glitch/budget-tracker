@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ---------- Header ---------- -->
+    <header class="header">
+      <h1>Budget Tracker</h1>
+      <p>Track your income and expenses easily</p>
+    </header>
+
+    <!-- ---------- Summary cards ---------- -->
+    <!-- JavaScript fills the numbers in these three spans. -->
+    <section class="summary">
+      <div class="card card-income">
+        <span class="card-label">Total Income</span>
+        <span class="card-value" id="totalIncome">₹0</span>
+      </div>
+
+      <div class="card card-expense">
+        <span class="card-label">Total Expenses</span>
+        <span class="card-value" id="totalExpense">₹0</span>
+      </div>
+
+      <div class="card card-balance">
+        <span class="card-label">Balance</span>
+        <span class="card-value" id="balance">₹0</span>
+      </div>
+    </section>
+
+    <!-- ---------- Add transaction form ---------- -->
+    <section class="panel">
+      <h2>Add a transaction</h2>
+
+      <!-- id="transactionForm" is how script.js finds this form -->
+      <form id="transactionForm" class="form">
+
+        <div class="field">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" name="amount" step="0.01" min="0.01"
+                 placeholder="500" required />
+        </div>
+
+        <div class="field">
+          <label for="type">Type</label>
+          <select id="type" name="type" required>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category"
+                 placeholder="Salary, Food, Rent" required />
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description"
+                 placeholder="Optional note" />
+        </div>
+
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+
+        <div class="field field-button">
+          <button type="submit" class="btn-primary">Add Transaction</button>
+        </div>
+      </form>
+
+      <!-- Error or success messages appear here -->
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <!-- ---------- Transaction list ---------- -->
+    <section class="panel">
+      <h2>Transactions</h2>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th class="right">Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <!-- JavaScript inserts the rows into this tbody -->
+          <tbody id="transactionBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Shown when there are no transactions yet -->
+      <p id="emptyState" class="empty">No transactions yet. Add your first one above.</p>
+    </section>
+
+  </div>
+
+  <!-- Load the JavaScript last, so the HTML above already exists -->
+  <script src="script.js"></script>
+</body>
+</html>
