@@ -5,6 +5,15 @@
 const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
+  // NEW: the owner of this transaction. Set by the server from the login
+  // token, never taken from the browser.
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "Transaction must belong to a user"],
+    index: true, // makes "find this user's transactions" fast
+  },
+
   // How much money. Must be a positive number.
   amount: {
     type: Number,

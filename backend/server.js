@@ -9,6 +9,7 @@ const cors = require("cors");
 const path = require("path");
 
 const transactionRoutes = require("./routes/transactions");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(
 // API Routes
 // --------------------------------------------------
 
+app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
 
 // Health check

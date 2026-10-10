@@ -7,6 +7,8 @@
 // change this to: const API_URL = "http://localhost:5000/api/transactions";
 const API_URL = "/api/transactions";
 
+// NEW: authFetch() and logout() come from auth.js, which index.html loads first.
+
 // ---------- Grab the HTML elements once ----------
 const form = document.getElementById("transactionForm");
 const amountInput = document.getElementById("amount");
@@ -22,6 +24,10 @@ const messageBox = document.getElementById("message");
 const totalIncomeEl = document.getElementById("totalIncome");
 const totalExpenseEl = document.getElementById("totalExpense");
 const balanceEl = document.getElementById("balance");
+
+// NEW: logged-in user display + logout button
+const userNameEl = document.getElementById("userName");
+const logoutBtn = document.getElementById("logoutBtn");
 
 // We keep the latest list here so we can re-draw without asking the server again.
 let transactions = [];
@@ -114,7 +120,7 @@ function renderTransactions() {
 // GET /api/transactions
 async function loadTransactions() {
   try {
-    const response = await fetch(API_URL);
+    const response = await authFetch(API_URL);
 
     if (!response.ok) throw new Error("Could not load transactions");
 
@@ -149,7 +155,7 @@ async function addTransaction(event) {
   button.disabled = true;
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await authFetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTransaction), // object -> JSON text
@@ -177,7 +183,7 @@ async function addTransaction(event) {
 // DELETE /api/transactions/:id
 async function deleteTransaction(id) {
   try {
-    const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    const response = await authFetch(`${API_URL}/${id}`, { method: "DELETE" });
     const data = await response.json();
 
     if (!response.ok) throw new Error(data.message || "Could not delete");
@@ -213,5 +219,11 @@ function setTodayAsDefault() {
   dateInput.value = new Date().toISOString().split("T")[0];
 }
 
+// NEW: show the user's name and wire up the logout button
+const currentUser = getUser();
+if (currentUser) userNameEl.textContent = currentUser.name;
+logoutBtn.addEventListener("click", logout);
+
 setTodayAsDefault();
-loadTransactions(); // runs as soon as the page opens
+// Only load data if auth.js did not just redirect us to the login page.
+if (getToken()) loadTransactions();

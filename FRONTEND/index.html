@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="app">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Budget Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- NEW: auth.js runs first and redirects to login if there is no token -->
+  <script src="auth.js"></script>
 </head>
 <body>
 
   <div class="page">
+
+    <!-- NEW: who is logged in + logout -->
+    <div class="userbar">
+      <span id="userName"></span>
+      <button type="button" id="logoutBtn" class="btn-logout">Log out</button>
+    </div>
 
     <!-- ---------- Header ---------- -->
     <header class="header">
